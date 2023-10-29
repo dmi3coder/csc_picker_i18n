@@ -46,9 +46,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   /// Variables to store country state city data in onChanged method.
   String countryValue = "";
-  String stateValue = "";
-  String cityValue = "";
-  String address = "";
+  String? stateValue = "";
+  String? cityValue = "";
+  String? address = "";
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ///triggers once country selected in dropdown
                   onCountryChanged: (value) {
                     setState(() {
+                      print("Selected country: ${value}");
                       ///store value in country variable
                       countryValue = value!;
                     });
@@ -144,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onStateChanged: (value) {
                     setState(() {
                       ///store value in state variable
-                      stateValue = value!;
+                      stateValue = value;
                     });
                   },
 
@@ -152,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onCityChanged: (value) {
                     setState(() {
                       ///store value in city variable
-                      cityValue = value!;
+                      cityValue = value;
                     });
                   },
 
@@ -168,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                     child: Text("Print Data")),
-                Text(address)
+                Text(address ?? "")
               ],
             )),
       ),

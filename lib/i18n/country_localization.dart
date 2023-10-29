@@ -33,7 +33,6 @@ class CscCountryLocalizations {
   }
 
   String? translate(String? key) {
-    print(key);
     return _localizedStrings[key] ?? key;
   }
 }

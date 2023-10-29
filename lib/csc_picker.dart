@@ -850,6 +850,7 @@ class CSCPicker extends StatefulWidget {
 class CSCPickerState extends State<CSCPicker> {
   List<String?> _cities = [];
   List<String?> _country = [];
+  List<String?> _countryValues = [];
   List<String?> _states = [];
   List<CscCountry> _countryFilter = [];
 
@@ -903,6 +904,7 @@ class CSCPickerState extends State<CSCPicker> {
   ///get countries from json response
   Future<List<String?>> getCountries() async {
     _country.clear();
+    _countryValues.clear();
     var countries = await getResponse() as List;
     if (_countryFilter.isNotEmpty) {
       _countryFilter.forEach((element) {
@@ -923,9 +925,9 @@ class CSCPickerState extends State<CSCPicker> {
     var model = Country();
     model.name = data['name'];
     model.emoji = data['emoji'];
-    print("${model.name} -> ");
     var name = CscCountryLocalizations.of(context)?.translate(CountryCode[model.name]) ?? model.name!;
     if (!mounted) return;
+    _countryValues.add(model.name!);
     setState(() {
       widget.flagState == CountryFlag.ENABLE ||
               widget.flagState == CountryFlag.SHOW_IN_DROP_DOWN_ONLY
@@ -1009,12 +1011,8 @@ class CSCPickerState extends State<CSCPicker> {
   void _onSelectedCountry(String value) {
     if (!mounted) return;
     setState(() {
-      if (widget.flagState == CountryFlag.SHOW_IN_DROP_DOWN_ONLY) {
-        try {
-          this.widget.onCountryChanged!(value.substring(6).trim());
-        } catch (e) {}
-      } else
-        this.widget.onCountryChanged!(value);
+      var countryValue = _countryValues[_country.indexOf(value)];
+      this.widget.onCountryChanged!(countryValue);
       //code added in if condition
       if (value != _selectedCountry) {
         _states.clear();
