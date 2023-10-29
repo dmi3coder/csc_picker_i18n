@@ -1,5 +1,7 @@
-import 'package:csc_picker/csc_picker.dart';
+import 'package:csc_picker_i18n/csc_picker.dart';
+import 'package:csc_picker_i18n/i18n/country_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// This is a implementation of the Country State City Picker.
 void main() {
@@ -15,13 +17,25 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+        supportedLocales: [
+          Locale("en"),
+          Locale("de"),
+          Locale("ua")
+        ],
+        locale: Locale("de"),
+        localizationsDelegates: [
+          CscCountryLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
       home: MyHomePage(title: 'CSC Picker'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -89,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ///defaultCountry: CscCountry.India,
 
                   ///Country Filter [OPTIONAL PARAMETER]
-                  countryFilter: [CscCountry.India,CscCountry.United_States,CscCountry.Canada],
+                  // countryFilter: [CscCountry.India,CscCountry.United_States,CscCountry.Canada],
 
                   ///Disable country dropdown (Note: use it with default country)
                   //disableCountry: true,
@@ -122,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onCountryChanged: (value) {
                     setState(() {
                       ///store value in country variable
-                      countryValue = value;
+                      countryValue = value!;
                     });
                   },
 
@@ -130,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onStateChanged: (value) {
                     setState(() {
                       ///store value in state variable
-                      stateValue = value;
+                      stateValue = value!;
                     });
                   },
 
@@ -138,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onCityChanged: (value) {
                     setState(() {
                       ///store value in city variable
-                      cityValue = value;
+                      cityValue = value!;
                     });
                   },
 
